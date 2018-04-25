@@ -1,0 +1,10 @@
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\bin\Debug\GameCaroLAN.exe.config
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\bin\Debug\GameCaroLAN.exe
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\bin\Debug\GameCaroLAN.pdb
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.Form1.resources
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.Properties.Resources.resources
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.csproj.GenerateResource.cache
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.exe
+C:\Users\Admin\Desktop\CoCaro\GameCaro\GameCaroLAN\GameCaroLAN\obj\Debug\GameCaroLAN.pdb

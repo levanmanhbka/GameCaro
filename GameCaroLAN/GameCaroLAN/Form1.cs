@@ -19,10 +19,13 @@ namespace GameCaroLAN
         {
             InitializeComponent();
 
-            chessBoardManager = new ChessBoardManager(panelChessBoad);
+            chessBoardManager = new ChessBoardManager(panelChessBoad, textBoxName, pictureBoxMark);
             chessBoardManager.DrawChessBoard();
         }
 
-       
+        private void buttonLan_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
