@@ -149,6 +149,7 @@
             this.Controls.Add(this.panelChessBoad);
             this.Name = "Form1";
             this.Text = "GameCaro";
+            this.Shown += new System.EventHandler(this.Form1_Show);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMark)).EndInit();
