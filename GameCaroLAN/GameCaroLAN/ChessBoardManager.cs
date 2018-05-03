@@ -54,6 +54,33 @@ namespace GameCaroLAN
             set { matrix = value; }
         }
 
+        private event EventHandler playerMarked;
+        public event EventHandler PlayerMarked
+        {
+            add
+            {
+                playerMarked += value;
+            }
+
+            remove
+            {
+                playerMarked -= value;
+            }
+        }
+
+        private event EventHandler endedGame;
+        public event EventHandler EndedGame
+        {
+            add
+            {
+                endedGame += value;
+            }
+
+            remove
+            {
+                endedGame -= value;
+            }
+        }
         #endregion;
 
         #region Initialize
@@ -71,8 +98,6 @@ namespace GameCaroLAN
             CurrentPlayer = 0;
             ChangePlayer();
         }
-
-
         #endregion
 
 
@@ -80,6 +105,7 @@ namespace GameCaroLAN
         #region Methods
         public void DrawChessBoard()
         {
+            chessBoard.Enabled = true;
             Matrix = new List<List<Button>>();
 
             Button oldButton = new Button()
@@ -126,6 +152,11 @@ namespace GameCaroLAN
             Mark(button);
 
             ChangePlayer();
+
+            if (playerMarked != null)
+            {
+                playerMarked(this, new EventArgs());
+            }
 
             if (IsEndGame(button))
             {
@@ -274,9 +305,12 @@ namespace GameCaroLAN
             return countTop + countBotton >= 5;
         }
 
-        private void EndGame()
+        public void EndGame()
         {
-            MessageBox.Show("Ket thuc");
+            if (endedGame != null)
+            {
+                endedGame(this, new EventArgs());
+            }
         }
         #endregion
     }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelChessBoad = new System.Windows.Forms.Panel();
             this.panel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -38,6 +39,7 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tmCoolDown = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -49,7 +51,7 @@
             this.panelChessBoad.BackColor = System.Drawing.SystemColors.Control;
             this.panelChessBoad.Location = new System.Drawing.Point(1, 1);
             this.panelChessBoad.Name = "panelChessBoad";
-            this.panelChessBoad.Size = new System.Drawing.Size(506, 452);
+            this.panelChessBoad.Size = new System.Drawing.Size(579, 452);
             this.panelChessBoad.TabIndex = 0;
             // 
             // panel
@@ -61,7 +63,7 @@
             this.panel.Controls.Add(this.pictureBoxMark);
             this.panel.Controls.Add(this.progressBarCoolDown);
             this.panel.Controls.Add(this.textBoxName);
-            this.panel.Location = new System.Drawing.Point(542, 189);
+            this.panel.Location = new System.Drawing.Point(582, 189);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(241, 264);
             this.panel.TabIndex = 1;
@@ -105,9 +107,9 @@
             // 
             // progressBarCoolDown
             // 
-            this.progressBarCoolDown.Location = new System.Drawing.Point(3, 53);
+            this.progressBarCoolDown.Location = new System.Drawing.Point(3, 56);
             this.progressBarCoolDown.Name = "progressBarCoolDown";
-            this.progressBarCoolDown.Size = new System.Drawing.Size(146, 50);
+            this.progressBarCoolDown.Size = new System.Drawing.Size(146, 29);
             this.progressBarCoolDown.TabIndex = 1;
             // 
             // textBoxName
@@ -134,16 +136,20 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.Highlight;
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(542, 2);
+            this.panel1.Location = new System.Drawing.Point(582, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(240, 175);
             this.panel1.TabIndex = 2;
+            // 
+            // tmCoolDown
+            // 
+            this.tmCoolDown.Tick += new System.EventHandler(this.tmCoolDown_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 456);
+            this.ClientSize = new System.Drawing.Size(824, 456);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.panelChessBoad);
@@ -171,6 +177,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Timer tmCoolDown;
     }
 }
 

@@ -23,9 +23,39 @@ namespace GameCaroLAN
             InitializeComponent();
 
             chessBoardManager = new ChessBoardManager(panelChessBoad, textBoxName, pictureBoxMark);
-            chessBoardManager.DrawChessBoard();
 
+            chessBoardManager.EndedGame += ChessBoard_EndedGame;
+            chessBoardManager.PlayerMarked += ChessBoard_PlayerMarked;
+
+            progressBarCoolDown.Step = Cons.COOL_DOWN_STEP;
+            progressBarCoolDown.Maximum = Cons.COOL_DOWN_TIME;
+            progressBarCoolDown.Value = 0;
+
+            tmCoolDown.Interval = Cons.COOL_DOWN_INTERVAL;
+
+            chessBoardManager.DrawChessBoard();
+           
             socketManager = new SocketManager();
+
+            //tmCoolDown.Start();
+        }
+
+        void EndGame()
+        {
+            tmCoolDown.Stop();
+            panelChessBoad.Enabled = false;
+            MessageBox.Show("Kết thúc game");
+        }
+
+        private void ChessBoard_PlayerMarked(object sender, EventArgs e)
+        {
+            tmCoolDown.Start();
+            progressBarCoolDown.Value = 0;
+        }
+
+        private void ChessBoard_EndedGame(object sender, EventArgs e)
+        {
+            EndGame();
         }
 
         private void buttonLan_Click(object sender, EventArgs e)
@@ -91,6 +121,16 @@ namespace GameCaroLAN
         {
             String data = (String)socketManager.Receive();
             MessageBox.Show(data);
+        }
+
+        private void tmCoolDown_Tick(object sender, EventArgs e)
+        {
+            progressBarCoolDown.PerformStep();
+
+            if (progressBarCoolDown.Value >= progressBarCoolDown.Maximum)
+            {
+                EndGame();
+            }
         }
     }
 }
