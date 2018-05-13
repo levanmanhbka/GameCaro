@@ -23,39 +23,9 @@ namespace GameCaroLAN
             InitializeComponent();
 
             chessBoardManager = new ChessBoardManager(panelChessBoad, textBoxName, pictureBoxMark);
+            NewGame();
 
-            chessBoardManager.EndedGame += ChessBoard_EndedGame;
-            chessBoardManager.PlayerMarked += ChessBoard_PlayerMarked;
-
-            progressBarCoolDown.Step = Cons.COOL_DOWN_STEP;
-            progressBarCoolDown.Maximum = Cons.COOL_DOWN_TIME;
-            progressBarCoolDown.Value = 0;
-
-            tmCoolDown.Interval = Cons.COOL_DOWN_INTERVAL;
-
-            chessBoardManager.DrawChessBoard();
-           
             socketManager = new SocketManager();
-
-            //tmCoolDown.Start();
-        }
-
-        void EndGame()
-        {
-            tmCoolDown.Stop();
-            panelChessBoad.Enabled = false;
-            MessageBox.Show("Kết thúc game");
-        }
-
-        private void ChessBoard_PlayerMarked(object sender, EventArgs e)
-        {
-            tmCoolDown.Start();
-            progressBarCoolDown.Value = 0;
-        }
-
-        private void ChessBoard_EndedGame(object sender, EventArgs e)
-        {
-            EndGame();
         }
 
         private void buttonLan_Click(object sender, EventArgs e)
@@ -123,14 +93,48 @@ namespace GameCaroLAN
             MessageBox.Show(data);
         }
 
-        private void tmCoolDown_Tick(object sender, EventArgs e)
+        void NewGame()
         {
-            progressBarCoolDown.PerformStep();
+            //stop process bar
+            chessBoardManager.DrawChessBoard();
+        }
 
-            if (progressBarCoolDown.Value >= progressBarCoolDown.Maximum)
-            {
-                EndGame();
-            }
+        void EndGame()
+        {
+
+        }
+
+        void Quit()
+        {
+            if (MessageBox.Show("Bạn có chắc muốn thoát chương trình ?", "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                Application.Exit();
+        }
+
+        void Undo()
+        {
+
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewGame();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Quit();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc muốn thoát chương trình ?", "Thông báo", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK)
+                e.Cancel = true;
+
         }
     }
 }
