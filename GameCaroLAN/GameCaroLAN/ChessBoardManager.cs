@@ -54,6 +54,34 @@ namespace GameCaroLAN
             set { matrix = value; }
         }
 
+        private event EventHandler playerMarked;
+        public event EventHandler PlayerMarked
+        {
+            add
+            {
+                playerMarked += value;
+            }
+
+            remove
+            {
+                playerMarked -= value;
+            }
+        }
+
+        private event EventHandler endedGame;
+        public event EventHandler EndedGame
+        {
+            add
+            {
+                endedGame += value;
+            }
+
+            remove
+            {
+                endedGame -= value;
+            }
+        }
+
         #endregion;
 
         #region Initialize
@@ -67,6 +95,9 @@ namespace GameCaroLAN
             };
             this.PlayerName = playerName;
             this.PlayerMark = mark;
+
+            CurrentPlayer = 0;
+            ChangePlayer();
         }
 
 
@@ -128,6 +159,11 @@ namespace GameCaroLAN
             Mark(button);
 
             ChangePlayer();
+
+            if (playerMarked != null)
+            {
+                playerMarked(this, new EventArgs());
+            }
 
             if (IsEndGame(button))
             {
@@ -278,7 +314,10 @@ namespace GameCaroLAN
 
         private void EndGame()
         {
-            MessageBox.Show("Ket thuc");
+            if(endedGame != null)
+            {
+                endedGame(this, new EventArgs());
+            }
         }
         #endregion
     }

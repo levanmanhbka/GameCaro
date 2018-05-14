@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelChessBoad = new System.Windows.Forms.Panel();
             this.panel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,6 +44,7 @@
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tmCoolDown = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMark)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -55,7 +57,7 @@
             this.panelChessBoad.BackColor = System.Drawing.SystemColors.Control;
             this.panelChessBoad.Location = new System.Drawing.Point(1, 27);
             this.panelChessBoad.Name = "panelChessBoad";
-            this.panelChessBoad.Size = new System.Drawing.Size(506, 426);
+            this.panelChessBoad.Size = new System.Drawing.Size(535, 464);
             this.panelChessBoad.TabIndex = 0;
             // 
             // panel
@@ -69,14 +71,14 @@
             this.panel.Controls.Add(this.textBoxName);
             this.panel.Location = new System.Drawing.Point(542, 189);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(241, 264);
+            this.panel.Size = new System.Drawing.Size(241, 302);
             this.panel.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(7, 222);
+            this.label1.Location = new System.Drawing.Point(8, 262);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(226, 31);
             this.label1.TabIndex = 5;
@@ -84,7 +86,7 @@
             // 
             // buttonLan
             // 
-            this.buttonLan.Location = new System.Drawing.Point(3, 169);
+            this.buttonLan.Location = new System.Drawing.Point(3, 192);
             this.buttonLan.Name = "buttonLan";
             this.buttonLan.Size = new System.Drawing.Size(235, 42);
             this.buttonLan.TabIndex = 4;
@@ -189,11 +191,15 @@
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
+            // tmCoolDown
+            // 
+            this.tmCoolDown.Tick += new System.EventHandler(this.tmCoolDown_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 456);
+            this.ClientSize = new System.Drawing.Size(784, 491);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.panelChessBoad);
@@ -232,6 +238,7 @@
         private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.Timer tmCoolDown;
     }
 }
 
