@@ -108,6 +108,9 @@ namespace GameCaroLAN
         void NewGame()
         {
             //stop process bar
+            progressBarCoolDown.Value = 0;
+            tmCoolDown.Stop();
+            undoToolStripMenuItem.Enabled = true;
             chessBoardManager.DrawChessBoard();
         }
 
@@ -115,6 +118,7 @@ namespace GameCaroLAN
         {
             tmCoolDown.Stop();
             panelChessBoad.Enabled = false;
+            undoToolStripMenuItem.Enabled = false;
             MessageBox.Show("Kết thúc game");
         }
 
@@ -126,7 +130,7 @@ namespace GameCaroLAN
 
         void Undo()
         {
-
+            chessBoardManager.Undo();
         }
 
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)

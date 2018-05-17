@@ -82,6 +82,14 @@ namespace GameCaroLAN
             }
         }
 
+        private Stack<PlayInfo> playTimeLine;
+        public Stack<PlayInfo> PlayTimeLine
+        {
+            get { return playTimeLine; }
+            set { playTimeLine = value; }
+        }
+
+
         #endregion;
 
         #region Initialize
@@ -98,6 +106,7 @@ namespace GameCaroLAN
 
             CurrentPlayer = 0;
             ChangePlayer();
+            
         }
 
 
@@ -110,6 +119,9 @@ namespace GameCaroLAN
         {
             chessBoard.Enabled = true;
             chessBoard.Controls.Clear();
+
+            PlayTimeLine = new Stack<PlayInfo>();
+
             CurrentPlayer = 0;
             ChangePlayer();
 
@@ -158,6 +170,10 @@ namespace GameCaroLAN
 
             Mark(button);
 
+            PlayTimeLine.Push(new PlayInfo(GetButtonPoint(button), CurrentPlayer));
+
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+
             ChangePlayer();
 
             if (playerMarked != null)
@@ -171,11 +187,37 @@ namespace GameCaroLAN
             }
         }
 
+        public bool Undo()
+        {
+            if (PlayTimeLine.Count <= 0)
+            {
+                return false;
+            }
+
+            PlayInfo oldPoint = PlayTimeLine.Pop();
+            Button btn = Matrix[oldPoint.Point.Y][oldPoint.Point.X];
+
+            btn.BackgroundImage = null;
+
+
+            if (PlayTimeLine.Count <= 0)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                oldPoint = PlayTimeLine.Peek();
+                CurrentPlayer = oldPoint.CurrentPlayer == 1 ? 0 : 1;
+            }
+
+            ChangePlayer();
+
+            return true;
+        }
+
         private void Mark(Button button)
         {
             button.BackgroundImage = Players[CurrentPlayer].Mark;
-
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
         }
 
         private void ChangePlayer()
