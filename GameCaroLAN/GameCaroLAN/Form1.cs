@@ -22,6 +22,8 @@ namespace GameCaroLAN
         {
             InitializeComponent();
 
+            Control.CheckForIllegalCrossThreadCalls = false;
+
             chessBoardManager = new ChessBoardManager(panelChessBoad, textBoxName, pictureBoxMark);
 
             chessBoardManager.EndedGame += ChessBoard_EndedGame;
@@ -45,47 +47,35 @@ namespace GameCaroLAN
             socketManager.IP = textBoxIP.Text;
             if (socketManager.ConnectServer() == false)
             {
+                socketManager.isServer = true;
+                panelChessBoad.Enabled = true;
                 socketManager.CreateServer();
-                Thread listernThread = new Thread(() =>
-                {
-                    while (true)
-                    {
-                        try
-                        {
-                            Listern();
+                //Thread listernThread = new Thread(() =>
+                //{
+                //    while (true)
+                //    {
+                //        try
+                //        {
+                //            Listern();
+                //            break;
+                //        }
+                //        catch
+                //        {
 
-                        }
-                        catch
-                        {
-
-                        }
-                        Thread.Sleep(10);
-                    }
-                });
-                listernThread.IsBackground = true;
-                listernThread.Start();
+                //        }
+                //        Thread.Sleep(10);
+                //    }
+                //});
+                //listernThread.IsBackground = true;
+                //listernThread.Start();
             }
             else
             {
-                socketManager.Send("Thong tin client");
-                Thread listernThread = new Thread(() =>
-                {
-                    while (true)
-                    {
-                        try
-                        {
-                            Listern();
-                            break;
-                        }
-                        catch
-                        {
+                socketManager.isServer = false;
+                panelChessBoad.Enabled = false;
+                Listern();
 
-                        }
-                        Thread.Sleep(10);
-                    }
-                });
-                listernThread.IsBackground = true;
-                listernThread.Start();
+                //socketManager.Send(new SocketData((int) SocketCommand.NOTIFY, "Client đã kết nối"));
             }
 
         }
@@ -101,8 +91,59 @@ namespace GameCaroLAN
 
         private void Listern()
         {
-            String data = (String)socketManager.Receive();
-            MessageBox.Show(data);
+            Thread listernThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        SocketData data = (SocketData)socketManager.Receive();
+                        ProcessData(data);
+                        //break;
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                    Thread.Sleep(10);
+                }
+            });
+            listernThread.IsBackground = true;
+            listernThread.Start();
+            
+
+            //MessageBox.Show(data);
+        }
+
+        private void ProcessData(SocketData data)
+        {
+            switch (data.Command)
+            {
+                case (int)SocketCommand.NOTIFY:
+                    MessageBox.Show(data.Message);
+                    break;
+                case (int)SocketCommand.NEW_GAME:
+                    //MessageBox.Show(data.Message);
+                    break;
+                case (int)SocketCommand.SEND_POINT:
+                    this.Invoke((MethodInvoker)(() => {
+                        progressBarCoolDown.Value = 0;
+                        panelChessBoad.Enabled = true;
+                        tmCoolDown.Start();
+                        chessBoardManager.OtherPlayerMark(data.Point);
+                    }));
+                    break;
+                case (int)SocketCommand.UNDO:
+                    break;
+                case (int)SocketCommand.END_GAME:
+                    break;
+                case (int)SocketCommand.QUIT:
+                    break;
+                default:
+                    break;
+            }
+
+            Listern();
         }
 
         void NewGame()
@@ -156,10 +197,15 @@ namespace GameCaroLAN
         }
 
         
-        private void ChessBoard_PlayerMarked(object sender, EventArgs e)
+        private void ChessBoard_PlayerMarked(object sender, ButtonClickEvent e)
         {
             tmCoolDown.Start();
+            panelChessBoad.Enabled = false;
             progressBarCoolDown.Value = 0;
+
+            socketManager.Send(new SocketData((int)SocketCommand.SEND_POINT,"" ,e.ClickedPoint));
+
+            Listern();
         }
 
         private void ChessBoard_EndedGame(object sender, EventArgs e)
