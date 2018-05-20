@@ -11,14 +11,26 @@ namespace GameCaroLAN
     public class SocketData
     {
         private int command;
-
-        public int Command { get => command; set => command = value; }
-        public Point Point { get => point; set => point = value; }
-        public string Message { get => message; set => message = value; }
-
         private Point point;
-
         private string message;
+
+        public int Command
+        {
+            get { return command; }
+            set { command = value; }
+        }
+
+        public Point Point
+        {
+            get { return point; }
+            set { point = value; }
+        }
+
+        public string Message
+        {
+            get { return message; }
+            set { message = value; }
+        }
 
         public SocketData(int command, string message, Point point)
         {

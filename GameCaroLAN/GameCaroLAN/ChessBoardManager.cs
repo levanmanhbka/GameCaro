@@ -398,7 +398,11 @@ namespace GameCaroLAN
     {
         private Point clickedPoint;
 
-        public Point ClickedPoint { get => clickedPoint; set => clickedPoint = value; }
+        public Point ClickedPoint
+        {
+            get { return clickedPoint; }
+            set { clickedPoint = value; }
+        }
 
         public ButtonClickEvent(Point point)
         {
