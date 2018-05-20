@@ -68,8 +68,8 @@ namespace GameCaroLAN
             }
         }
 
-        private event EventHandler endedGame;
-        public event EventHandler EndedGame
+        private event EventHandler<EndGameEvent> endedGame;
+        public event EventHandler<EndGameEvent> EndedGame
         {
             add
             {
@@ -172,9 +172,7 @@ namespace GameCaroLAN
 
             PlayTimeLine.Push(new PlayInfo(GetButtonPoint(button), CurrentPlayer));
 
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
-
-            ChangePlayer();
+           
 
             if (playerMarked != null)
             {
@@ -183,8 +181,11 @@ namespace GameCaroLAN
 
             if (IsEndGame(button))
             {
-                EndGame();
+                EndGame(Players[CurrentPlayer].Name);
             }
+
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+            ChangePlayer();
         }
 
         public void OtherPlayerMark(Point point)
@@ -202,19 +203,15 @@ namespace GameCaroLAN
 
             PlayTimeLine.Push(new PlayInfo(GetButtonPoint(button), CurrentPlayer));
 
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
-
-            ChangePlayer();
-
-            //if (playerMarked != null)
-            //{
-            //    playerMarked(this, new EventArgs());
-            //}
-
             if (IsEndGame(button))
             {
-                EndGame();
+                EndGame(Players[CurrentPlayer].Name);
             }
+
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+            ChangePlayer();
+
+            
         }
 
         public bool Undo()
@@ -223,6 +220,14 @@ namespace GameCaroLAN
             {
                 return false;
             }
+            PlayInfo oldPoint = PlayTimeLine.Peek();
+            CurrentPlayer = oldPoint.CurrentPlayer == 1 ? 0 : 1;
+            return UndoAsStep() && UndoAsStep();
+        }
+
+        private bool UndoAsStep()
+        {
+            
 
             PlayInfo oldPoint = PlayTimeLine.Pop();
             Button btn = Matrix[oldPoint.Point.Y][oldPoint.Point.X];
@@ -237,7 +242,6 @@ namespace GameCaroLAN
             else
             {
                 oldPoint = PlayTimeLine.Peek();
-                CurrentPlayer = oldPoint.CurrentPlayer == 1 ? 0 : 1;
             }
 
             ChangePlayer();
@@ -384,11 +388,11 @@ namespace GameCaroLAN
             return countTop + countBotton >= 5;
         }
 
-        private void EndGame()
+        private void EndGame(string name)
         {
             if(endedGame != null)
             {
-                endedGame(this, new EventArgs());
+                endedGame(this, new EndGameEvent(name));
             }
         }
         #endregion
@@ -407,6 +411,20 @@ namespace GameCaroLAN
         public ButtonClickEvent(Point point)
         {
             this.ClickedPoint = point;
+        }
+    }
+
+    public class EndGameEvent: EventArgs
+    {
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public EndGameEvent(string strName)
+        {
+            this.name = strName;
         }
     }
 }
